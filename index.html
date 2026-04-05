@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hodahel Moinzadeh — Systems Automation Engineer</title>
+  <meta name="description" content="Systems Automation Engineer — AI, Microsoft 365, Entra ID, PowerShell, Graph API. Baltimore, MD." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:      #07090f;
+      --bg2:     #0b1120;
+      --bg3:     #101624;
+      --border:  rgba(60,130,240,0.11);
+      --border2: rgba(60,130,240,0.26);
+      --accent:  #4a8fe8;
+      --green:   #06d6a0;
+      --amber:   #f5a623;
+      --text:    #dce6f2;
+      --soft:    #8aa0bc;
+      --dim:     #3a5272;
+      --mono:    'JetBrains Mono', monospace;
+      --sans:    'DM Sans', sans-serif;
+      --display: 'Syne', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: var(--bg); color: var(--text); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: radial-gradient(circle, rgba(60,130,240,0.10) 1px, transparent 1px);
+      background-size: 34px 34px; pointer-events: none; z-index: 0;
+    }
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 54px;
+      display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem;
+      background: rgba(7,9,15,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: 0.05em; }
+    .nav-logo .at { color: var(--green); }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a { font-family: var(--mono); font-size: 11px; color: var(--soft); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.15s; }
+    .nav-links a:hover { color: var(--text); }
+    main { position: relative; z-index: 1; max-width: 920px; margin: 0 auto; padding: 0 2rem; }
+    section { padding: 96px 0; border-bottom: 1px solid var(--border); }
+    section:last-child { border-bottom: none; }
+    .section-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green); margin-bottom: 6px; }
+    h2.section-title { font-family: var(--display); font-size: 2.1rem; font-weight: 800; color: var(--text); margin-bottom: 3.5rem; letter-spacing: -0.01em; }
+    #hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 120px; padding-bottom: 80px; }
+    .terminal-window { background: var(--bg2); border: 1px solid var(--border2); border-radius: 10px; overflow: hidden; margin-bottom: 3rem; max-width: 560px; }
+    .terminal-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: var(--bg3); border-bottom: 1px solid var(--border); }
+    .dot { width: 11px; height: 11px; border-radius: 50%; }
+    .dot-r { background: #ff5f57; } .dot-a { background: #febc2e; } .dot-g { background: #28c840; }
+    .t-title { margin-left: auto; font-family: var(--mono); font-size: 10px; color: var(--dim); letter-spacing: 0.05em; }
+    .terminal-body { padding: 1.25rem 1.5rem; font-family: var(--mono); font-size: 13px; line-height: 2; }
+    .pr { color: var(--accent); margin-right: 8px; user-select: none; }
+    .cm { color: var(--soft); }
+    .out { color: var(--green); padding-left: 16px; }
+    .out.d { color: var(--dim); }
+    #cursor { display: inline-block; width: 7px; height: 14px; background: var(--accent); vertical-align: middle; margin-left: 2px; animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    h1 { font-family: var(--display); font-size: clamp(2.6rem, 6vw, 4.2rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.025em; margin-bottom: 0.75rem; }
+    h1 .a { color: var(--accent); }
+    .hero-role { font-family: var(--mono); font-size: 13px; color: var(--soft); letter-spacing: 0.04em; margin-bottom: 1.25rem; }
+    .hero-role span { color: var(--green); margin: 0 8px; }
+    .hero-sub { font-size: 1.02rem; color: var(--soft); max-width: 580px; margin-bottom: 2rem; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2.5rem; }
+    .pill { font-family: var(--mono); font-size: 11px; padding: 4px 13px; border-radius: 100px; border: 1px solid; letter-spacing: 0.04em; }
+    .pb { color: var(--accent); border-color: rgba(74,143,232,0.4); background: rgba(74,143,232,0.07); }
+    .pg { color: var(--green);  border-color: rgba(6,214,160,0.4);  background: rgba(6,214,160,0.07); }
+    .pa { color: var(--amber);  border-color: rgba(245,166,35,0.4); background: rgba(245,166,35,0.07); }
+    .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 22px; border-radius: 6px; font-family: var(--mono); font-size: 13px; text-decoration: none; cursor: pointer; border: 1px solid transparent; transition: all 0.17s; }
+    .btn svg { width: 14px; height: 14px; fill: currentColor; flex-shrink: 0; }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { background: #2f73c8; }
+    .btn-ghost { background: transparent; color: var(--soft); border-color: var(--border2); }
+    .btn-ghost:hover { color: var(--text); border-color: var(--accent); }
+    .about-card { background: var(--bg2); border: 1px solid var(--border2); border-radius: 10px; padding: 2rem 2.5rem; }
+    .about-card p { color: var(--soft); font-size: 0.96rem; margin-bottom: 1rem; }
+    .about-card p:last-child { margin-bottom: 0; }
+    .about-card strong { color: var(--text); font-weight: 500; }
+    .about-list { list-style: none; margin-top: 0.75rem; display: grid; gap: 6px; }
+    .about-list li { font-size: 0.9rem; color: var(--soft); padding-left: 16px; position: relative; }
+    .about-list li::before { content: '▸'; position: absolute; left: 0; color: var(--accent); }
+    .timeline { padding-left: 2rem; position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 10px; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--accent) 70%, transparent); }
+    .job { position: relative; margin-bottom: 3.5rem; }
+    .job::before { content: ''; position: absolute; left: -2.4rem; top: 8px; width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--accent); background: var(--bg); }
+    .job.current::before { background: var(--accent); box-shadow: 0 0 10px rgba(74,143,232,0.5); }
+    .job-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 4px; margin-bottom: 2px; }
+    .job-title { font-family: var(--display); font-size: 1.05rem; font-weight: 600; color: var(--text); }
+    .job-date  { font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.05em; margin-top: 3px; }
+    .job-company { font-size: 0.88rem; color: var(--accent); font-weight: 500; margin-bottom: 14px; }
+    .job-company .loc { color: var(--dim); font-weight: 400; margin-left: 4px; }
+    .now-badge { display: inline-block; font-family: var(--mono); font-size: 10px; padding: 2px 8px; border-radius: 100px; background: rgba(6,214,160,0.12); color: var(--green); border: 1px solid rgba(6,214,160,0.3); margin-left: 10px; vertical-align: middle; letter-spacing: 0.06em; }
+    .bullets { list-style: none; }
+    .bullets li { font-size: 0.875rem; color: var(--soft); padding: 4px 0 4px 16px; position: relative; }
+    .bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--green); }
+    .stack-grid { display: grid; gap: 2.5rem; }
+    .stack-cat h3 { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--dim); margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .tag { font-family: var(--mono); font-size: 12px; padding: 5px 13px; border-radius: 5px; background: var(--bg2); border: 1px solid var(--border); color: var(--soft); transition: all 0.14s; cursor: default; }
+    .tag:hover { border-color: rgba(74,143,232,0.45); color: var(--text); background: rgba(74,143,232,0.06); }
+    .cert-grid { display: grid; gap: 1rem; }
+    .cert-item { display: flex; align-items: center; gap: 16px; padding: 1.25rem 1.5rem; background: var(--bg2); border: 1px solid var(--border); border-left: 3px solid var(--amber); border-radius: 0 8px 8px 0; }
+    .cert-icon { font-size: 22px; color: var(--amber); flex-shrink: 0; }
+    .cert-name  { font-weight: 500; color: var(--text); font-size: 0.95rem; margin-bottom: 3px; }
+    .cert-meta  { font-size: 0.83rem; color: var(--soft); }
+    .cert-since { font-family: var(--mono); font-size: 10px; color: var(--dim); margin-top: 4px; letter-spacing: 0.05em; }
+    .edu-grid { display: grid; gap: 1rem; }
+    .edu-item { padding: 1.1rem 1.4rem; background: var(--bg2); border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; transition: border-left-color 0.18s; }
+    .edu-item:hover { border-left-color: var(--green); }
+    .edu-degree { font-weight: 500; color: var(--text); font-size: 0.95rem; margin-bottom: 3px; }
+    .edu-school  { font-size: 0.84rem; color: var(--soft); }
+    .edu-years   { font-family: var(--mono); font-size: 10px; color: var(--dim); margin-top: 3px; letter-spacing: 0.05em; }
+    #contact .inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+    .contact-intro p { color: var(--soft); font-size: 0.95rem; margin-bottom: 1.25rem; }
+    .social-links { display: flex; flex-direction: column; gap: 10px; }
+    a.social-link { display: flex; align-items: center; gap: 12px; padding: 0.85rem 1.1rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--soft); font-size: 0.875rem; transition: all 0.17s; }
+    a.social-link:hover { border-color: var(--border2); color: var(--text); }
+    .social-icon { font-family: var(--mono); font-size: 13px; color: var(--accent); width: 22px; flex-shrink: 0; text-align: center; }
+    .social-meta { line-height: 1.3; }
+    .social-type { font-family: var(--mono); font-size: 10px; color: var(--dim); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1px; }
+    .form-card { background: var(--bg2); border: 1px solid var(--border2); border-radius: 10px; padding: 2rem; }
+    .form-card h3 { font-family: var(--display); font-size: 1.1rem; font-weight: 600; color: var(--text); margin-bottom: 1.5rem; }
+    .field { margin-bottom: 1rem; }
+    .field label { display: block; font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+    .field input, .field textarea { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; color: var(--text); font-family: var(--sans); font-size: 14px; outline: none; transition: border-color 0.15s; resize: none; }
+    .field input::placeholder, .field textarea::placeholder { color: var(--dim); }
+    .field input:focus, .field textarea:focus { border-color: var(--border2); }
+    .field textarea { height: 110px; }
+    .btn-submit { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 11px; background: var(--accent); color: #fff; border: none; border-radius: 6px; font-family: var(--mono); font-size: 13px; cursor: pointer; transition: background 0.17s; margin-top: 1rem; }
+    .btn-submit:hover { background: #2f73c8; }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+    #form-msg { margin-top: 1rem; font-family: var(--mono); font-size: 12px; text-align: center; min-height: 1.5em; }
+    #form-msg.ok  { color: var(--green); }
+    #form-msg.err { color: #f87171; }
+    footer { position: relative; z-index: 1; text-align: center; padding: 2.5rem 2rem; font-family: var(--mono); font-size: 11px; color: var(--dim); letter-spacing: 0.04em; }
+    footer span { color: var(--accent); }
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @media (max-width: 720px) { #contact .inner { grid-template-columns: 1fr; gap: 2rem; } }
+    @media (max-width: 600px) { nav { padding: 0 1.25rem; } .nav-links { display: none; } main { padding: 0 1.25rem; } h1 { font-size: 2.2rem; } h2.section-title { font-size: 1.75rem; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">hody<span class="at">@</span>resume:~$</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="terminal-window">
+      <div class="terminal-bar">
+        <div class="dot dot-r"></div><div class="dot dot-a"></div><div class="dot dot-g"></div>
+        <span class="t-title">hody — bash — 80×24</span>
+      </div>
+      <div class="terminal-body">
+        <div><span class="pr">$</span><span class="cm">whoami</span></div>
+        <div class="out" id="l1"></div>
+        <div id="b2" style="display:none;"><span class="pr">$</span><span class="cm">cat /etc/title</span></div>
+        <div class="out" id="l2"></div>
+        <div id="b3" style="display:none;"><span class="pr">$</span><span class="cm">echo $LOCATION</span></div>
+        <div class="out" id="l3"></div>
+        <div id="b4" style="display:none;"><span class="pr">$</span><span class="cm">uptime --since</span></div>
+        <div class="out d" id="l4"></div>
+        <span id="cursor"></span>
+      </div>
+    </div>
+
+    <h1>Hodahel<br><span class="a">Moinzadeh</span></h1>
+    <p class="hero-role">Systems Automation Engineer <span>|</span> AI · M365 · Identity · Security</p>
+    <p class="hero-sub">Systems engineer with deep roots in MSP and enterprise IT — now focused on automation, AI-driven workflows, and building infrastructure that runs itself.</p>
+
+    <div class="pill-row">
+      <span class="pill pb">M365 · Entra ID · Intune</span>
+      <span class="pill pb">Exchange Online · Autopilot</span>
+      <span class="pill pg">PowerShell · Graph API · Bash</span>
+      <span class="pill pg">Linux · Virtualization · Docker</span>
+      <span class="pill pa">HIPAA Compliance</span>
+      <span class="pill pa">pfSense · WireGuard · UniFi</span>
+    </div>
+
+    <div class="cta-row">
+      <a href="#contact" class="btn btn-primary">Get in touch</a>
+      <a href="https://linkedin.com/in/hodahel-moinzadeh" target="_blank" rel="noopener" class="btn btn-ghost">
+        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn
+      </a>
+      <a href="https://github.com/HodyMoin" target="_blank" rel="noopener" class="btn btn-ghost">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>GitHub
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-label">// system overview</p>
+    <h2 class="section-title">System Overview</h2>
+    <div class="about-card reveal">
+      <p>I build the behind-the-scenes systems that make everything just work. Identity, automation, security, cloud infrastructure — I've spent years designing and fixing the stuff most people never see until it breaks.</p>
+      <p>I think in systems. I look at how things connect, where they break, and what shouldn't be manual — then I fix it. My background is Microsoft 365, Entra ID, Intune, PowerShell, and Graph API, and I actively integrate <strong>AI into real workflows</strong> — not as a buzzword, but as a tool to make systems smarter and people's jobs easier.</p>
+      <p>I've led cloud migrations, built identity and security frameworks from scratch, and spent years as the person who gets called when something is broken and nobody knows why. Now I design automation — increasingly AI-driven — that keeps those calls from happening in the first place.</p>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <p class="section-label">// work history</p>
+    <h2 class="section-title">Experience</h2>
+    <div class="timeline">
+
+      <div class="job current reveal">
+        <div class="job-top">
+          <span class="job-title">Systems Automation Specialist <span class="now-badge">now</span></span>
+          <span class="job-date">Apr 2026 – Present</span>
+        </div>
+        <div class="job-company">Hord Coplan Macht (HCM)<span class="loc">· Baltimore, MD</span></div>
+        <ul class="bullets">
+          <li>Design and implement automation solutions to streamline IT operations, reduce manual tasks, and improve system reliability.</li>
+          <li>Develop and maintain PowerShell scripts and Microsoft Graph API integrations for user, device, and cloud management.</li>
+          <li>Support and optimize Microsoft 365, Entra ID, and Intune environments across users and endpoints.</li>
+          <li>Build and test automation workflows, including AI-assisted tools, to improve internal processes and team efficiency.</li>
+          <li>Manage identity, access, and security configurations including Conditional Access and compliance policies.</li>
+          <li>Collaborate with internal teams to translate workflow gaps into scalable technical solutions.</li>
+          <li>Document automation processes, system configurations, and standards for long-term maintainability.</li>
+        </ul>
+      </div>
+
+      <div class="job reveal">
+        <div class="job-top">
+          <span class="job-title">Senior Systems Administrator · IT Infrastructure &amp; Security Lead</span>
+          <span class="job-date">Jan 2023 – Mar 2026</span>
+        </div>
+        <div class="job-company">SecureCPU Technology Services<span class="loc">· Pikesville, MD · MSP</span></div>
+        <ul class="bullets">
+          <li>Led daily support operations across multiple client environments as Tier 3 escalation for M365, systems, networking, and security issues.</li>
+          <li>Architected and deployed Microsoft 365 migrations from Google Workspace — Exchange Online, Entra ID, Intune, full HIPAA compliance redesign.</li>
+          <li>Supported and troubleshot Exchange Online, Teams, SharePoint, OneDrive, and Entra ID across all managed tenants.</li>
+          <li>Implemented Conditional Access, MFA, endpoint compliance, and security hardening org-wide.</li>
+          <li>Managed firewalls and networks (pfSense, SonicWall, UniFi), VPNs, VLANs, and network segmentation.</li>
+          <li>Administered Windows Server (AD, GPO, file services) and hybrid identity integration.</li>
+          <li>Identified recurring issues, performed root cause analysis, and reduced repeat incidents through automation and documentation.</li>
+          <li>Built standards, SOPs, and repeatable procedures to improve service quality and scalability across clients.</li>
+        </ul>
+      </div>
+
+      <div class="job reveal">
+        <div class="job-top">
+          <span class="job-title">Senior System Administrator · Administrative Director</span>
+          <span class="job-date">Mar 2018 – Sep 2024</span>
+        </div>
+        <div class="job-company">Advanced Security Safe &amp; Lock<span class="loc">· Baltimore, MD</span></div>
+        <ul class="bullets">
+          <li>Oversaw internal IT operations supporting multiple departments and locations.</li>
+          <li>Managed Microsoft 365 users, permissions, email, and collaboration tools across the organization.</li>
+          <li>Served as senior escalation resource for complex issues across cloud services, identity, and networking.</li>
+          <li>Coordinated workloads, prioritized service requests, and ensured timely resolution.</li>
+          <li>Mentored technical staff and drove documentation and internal process improvement.</li>
+          <li>Led security hardening initiatives, system upgrades, and stability improvements aligned with business goals.</li>
+        </ul>
+      </div>
+
+      <div class="job reveal">
+        <div class="job-top">
+          <span class="job-title">Senior System Administrator (MSP)</span>
+          <span class="job-date">Dec 2019 – Aug 2022</span>
+        </div>
+        <div class="job-company">NetSpear.io<span class="loc">· Pikesville, MD · MSP</span></div>
+        <ul class="bullets">
+          <li>Supported multiple client environments in a fast-paced MSP — networks, servers, firewalls, cloud, and VoIP.</li>
+          <li>Assisted with Microsoft 365 deployments, migrations, and end-user support.</li>
+          <li>Managed servers, firewalls, backups, and handled Tier 2/3 escalations.</li>
+        </ul>
+      </div>
+
+      <div class="job reveal">
+        <div class="job-top">
+          <span class="job-title">Operations Director · Office Manager</span>
+          <span class="job-date">Jun 2015 – Aug 2018</span>
+        </div>
+        <div class="job-company">SPL Group<span class="loc">· New York, NY</span></div>
+        <ul class="bullets">
+          <li>Managed day-to-day IT operations, office infrastructure, and customer service.</li>
+          <li>Served as IT technician and web developer alongside standard office operations.</li>
+          <li>Service triage, escalation handling, and operational coordination.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TECH STACK -->
+  <section id="stack">
+    <p class="section-label">// tools &amp; technologies</p>
+    <h2 class="section-title">Tech Stack</h2>
+    <div class="stack-grid">
+
+      <div class="stack-cat reveal">
+        <h3>Microsoft 365 &amp; Identity</h3>
+        <div class="tags">
+          <span class="tag">Exchange Online</span><span class="tag">Entra ID</span><span class="tag">Intune</span>
+          <span class="tag">Autopilot</span><span class="tag">Defender for Business</span><span class="tag">Conditional Access</span>
+          <span class="tag">SharePoint</span><span class="tag">Teams</span><span class="tag">OneDrive</span>
+          <span class="tag">Windows 365 Cloud PC</span><span class="tag">Company Portal</span><span class="tag">Authenticator MFA</span>
+        </div>
+      </div>
+
+      <div class="stack-cat reveal">
+        <h3>Scripting &amp; Automation</h3>
+        <div class="tags">
+          <span class="tag">PowerShell</span><span class="tag">Microsoft Graph API</span>
+          <span class="tag">Bash / Linux</span><span class="tag">SuperOps RMM/PSA</span>
+          <span class="tag">AI-Assisted Workflows</span>
+        </div>
+      </div>
+
+      <div class="stack-cat reveal">
+        <h3>Windows Server &amp; Active Directory</h3>
+        <div class="tags">
+          <span class="tag">Windows Server</span><span class="tag">Active Directory</span>
+          <span class="tag">Group Policy (GPO)</span><span class="tag">File Services</span>
+          <span class="tag">Hybrid Identity</span><span class="tag">DNS / DHCP</span>
+        </div>
+      </div>
+
+      <div class="stack-cat reveal">
+        <h3>Networking &amp; Security</h3>
+        <div class="tags">
+          <span class="tag">pfSense</span><span class="tag">SonicWall</span><span class="tag">WireGuard VPN</span>
+          <span class="tag">UniFi</span><span class="tag">Alta Labs</span><span class="tag">VLANs &amp; Segmentation</span>
+          <span class="tag">Guardz Endpoint Security</span><span class="tag">HIPAA Compliance</span>
+          <span class="tag">Intrusion Detection / Prevention</span><span class="tag">SSL / TLS</span><span class="tag">VPN Management</span>
+        </div>
+      </div>
+
+      <div class="stack-cat reveal">
+        <h3>Virtualization &amp; Containers</h3>
+        <div class="tags">
+          <span class="tag">Proxmox VE</span><span class="tag">VMware</span><span class="tag">Hyper-V</span>
+          <span class="tag">Docker</span><span class="tag">Kubernetes</span>
+        </div>
+      </div>
+
+      <div class="stack-cat reveal">
+        <h3>Cloud &amp; Infrastructure</h3>
+        <div class="tags">
+          <span class="tag">Azure</span><span class="tag">AWS</span><span class="tag">Google Cloud Platform</span>
+          <span class="tag">DigitalOcean</span><span class="tag">Cloudflare</span><span class="tag">Nginx Proxy Manager</span>
+          <span class="tag">Authentik SSO</span><span class="tag">CyberPanel</span><span class="tag">Heimdall Dashboard</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <p class="section-label">// credentials</p>
+    <h2 class="section-title">Certifications</h2>
+    <div class="cert-grid">
+      <div class="cert-item reveal">
+        <span class="cert-icon">⬡</span>
+        <div>
+          <div class="cert-name">pfSense / Netgate Firewalls</div>
+          <div class="cert-meta">Certified in pfSense / Netgate firewall configuration, deployment, and management</div>
+          <div class="cert-since">Aug 2022 – Present</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <p class="section-label">// background</p>
+    <h2 class="section-title">Education</h2>
+    <div class="edu-grid">
+      <div class="edu-item reveal">
+        <div class="edu-degree">B.S. Information Technology &amp; Cybersecurity</div>
+        <div class="edu-school">University of Maryland Global Campus (UMGC) · Baltimore, MD</div>
+        <div class="edu-years">2019 – 2023</div>
+      </div>
+      <div class="edu-item reveal">
+        <div class="edu-degree">A.S. Applied Sciences &amp; Cybersecurity</div>
+        <div class="edu-school">Community College of Baltimore County (CCBC) · Catonsville, MD</div>
+        <div class="edu-years">2017 – 2019</div>
+      </div>
+      <div class="edu-item reveal">
+        <div class="edu-degree">Information Technology &amp; Cybersecurity</div>
+        <div class="edu-school">Touro College &amp; University · New York, NY</div>
+        <div class="edu-years">2016 – 2017</div>
+      </div>
+      <div class="edu-item reveal">
+        <div class="edu-degree">Yeshiva Studies</div>
+        <div class="edu-school">Mikdash Melech · Jerusalem, Israel</div>
+      </div>
+      <div class="edu-item reveal">
+        <div class="edu-degree">Secondary Education</div>
+        <div class="edu-school">Talmudical Academy of Baltimore</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">// get in touch</p>
+    <h2 class="section-title">Contact</h2>
+    <div class="inner">
+
+      <div class="contact-intro reveal">
+        <p>Have a question, an opportunity, or just want to connect? Fill out the form and I'll get back to you.</p>
+        <p>You can also find me on:</p>
+        <div class="social-links">
+
+          <a href="https://linkedin.com/in/hodahel-moinzadeh" target="_blank" rel="noopener" class="social-link">
+            <span class="social-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></span>
+            <div class="social-meta"><div class="social-type">LinkedIn</div>hodahel-moinzadeh</div>
+          </a>
+
+          <a href="https://github.com/HodyMoin" target="_blank" rel="noopener" class="social-link">
+            <span class="social-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg></span>
+            <div class="social-meta"><div class="social-type">GitHub</div>HodyMoin</div>
+          </a>
+
+          <a href="https://profile.indeed.com/p/hodahelm-sag5we3" target="_blank" rel="noopener" class="social-link">
+            <span class="social-icon" style="font-size:11px;">▶</span>
+            <div class="social-meta"><div class="social-type">Indeed</div>hodahelm-sag5we3</div>
+          </a>
+
+          <a href="https://hodahelmoinzadeh.com" target="_blank" rel="noopener" class="social-link">
+            <span class="social-icon">◈</span>
+            <div class="social-meta"><div class="social-type">Website</div>hodahelmoinzadeh.com</div>
+          </a>
+
+        </div>
+      </div>
+
+      <div class="form-card reveal">
+        <h3>Send a Message</h3>
+        <form id="cf" action="https://formspree.io/f/maqllree" method="POST">
+          <div class="field">
+            <label for="fname">Name</label>
+            <input type="text" id="fname" name="name" placeholder="Your name" required autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="femail">Email</label>
+            <input type="email" id="femail" name="email" placeholder="your@email.com" required autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="fmsg">Message</label>
+            <textarea id="fmsg" name="message" placeholder="What's on your mind?" required></textarea>
+          </div>
+          <button type="submit" class="btn-submit" id="sbtn">Send Message →</button>
+          <p id="form-msg"></p>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>built by <span>hodahel moinzadeh</span> · baltimore, md · <span id="yr"></span></footer>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  const seq = [
+    { out: 'l1', text: 'hodahel moinzadeh',                              next: 'b2' },
+    { out: 'l2', text: 'systems automation engineer · ai · m365 · idm',  next: 'b3' },
+    { out: 'l3', text: 'baltimore, md',                                   next: 'b4' },
+    { out: 'l4', text: '● active    10+ years in the field',              next: null },
+  ];
+  let si = 0, ci = 0;
+  const cur = document.getElementById('cursor');
+  function type() {
+    if (si >= seq.length) { cur.style.display = 'none'; return; }
+    const s = seq[si];
+    if (s.next && ci === 0) document.getElementById(s.next).style.display = '';
+    const el = document.getElementById(s.out);
+    if (ci < s.text.length) { el.textContent += s.text[ci++]; setTimeout(type, ci === 1 ? 55 : 34); }
+    else { si++; ci = 0; setTimeout(type, 350); }
+  }
+  setTimeout(type, 700);
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 90); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  const form = document.getElementById('cf');
+  const btn  = document.getElementById('sbtn');
+  const msg  = document.getElementById('form-msg');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true; btn.textContent = 'Sending…';
+    msg.className = ''; msg.textContent = '';
+    try {
+      const res = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' } });
+      if (res.ok) { msg.className = 'ok'; msg.textContent = "✓ Message sent — I'll get back to you soon."; form.reset(); }
+      else { throw new Error(); }
+    } catch { msg.className = 'err'; msg.textContent = '✗ Something went wrong. Please try again.'; }
+    btn.disabled = false; btn.textContent = 'Send Message →';
+  });
+</script>
+
+</body>
+</html>
