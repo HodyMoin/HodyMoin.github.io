@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hodahelmoinzadeh.com/sitemap.xml
